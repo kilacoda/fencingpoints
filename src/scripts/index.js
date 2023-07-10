@@ -15,7 +15,7 @@ async function load(e) {
         from: "inline",
         config: {
           serverMode: "full",
-          url: "./fencers.db",
+          url: "../fencers.db",
           requestChunkSize: 4096,
         },
       },
