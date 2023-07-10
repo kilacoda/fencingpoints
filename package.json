@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev": "webpack serve --mode=development",
+    "build": "webpack build --mode=production"
+  },
   "devDependencies": {
     "http-server": "^14.1.1",
     "ts-loader": "^9.4.4",
