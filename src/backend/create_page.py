@@ -48,7 +48,7 @@ with doc:
         thead(tr(th("Rank"),th("Name"),th("Country"),th("Points")))
         tbody(id="points-table-body")
 
-    script(type='text/javascript', src=Path("./src/scripts/index.js").as_posix())
+    # script(type='text/javascript', src=Path("./src/scripts/index.js",).as_posix())
     script(type='text/javascript', src=Path("./dist/bundle.js").as_posix())
 
 with open("index.html","w+") as page:
