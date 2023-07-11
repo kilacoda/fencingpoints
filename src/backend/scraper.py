@@ -11,7 +11,9 @@ def get_points_value(points_str:list[str]):
     if len(points_str) == 0:
         return 0
     else:
-        return float(points_str[0].strip(" ()"))
+        if "(" in points_str[0]:
+            return 0
+        return float(points_str[0])
 
 @define
 class Fencer:
@@ -40,7 +42,8 @@ for weapon,category,gender,event in product(
             rank INTEGER PRIMARY KEY,
             name TEXT,
             country TEXT,
-            points FLOAT
+            points FLOAT,
+            olympic_qualifed, BOOLEAN
         );
         '''
     )
@@ -84,19 +87,21 @@ for weapon,category,gender,event in product(
         country = fencer.find("td",class_="GeneralRanks-fencerCountry").contents[0]
 
         results = fencer.find_all("td",class_="GeneralRanks-fencerResult")
-        points = [get_points_value(result.contents) for result in results]
+        points = [get_points_value(result.contents) for result in results[:-1]]
 
         name = name.replace("'","''")
         country = country.replace("'","''")
-        print(            f'''
-            INSERT INTO {fencers_table} VALUES (
-                {rank},\'{name}\',\'{country}\',{sum(points)}
+        if weapon == "E" and event == "E":
+            print(points)
+            print(            f'''
+                INSERT INTO {fencers_table} VALUES (
+                    {rank},\'{name}\',\'{country}\',{sum(points)}
+                )
+                '''
             )
-            '''
-        )
         cursor.execute(
             f'''
-            INSERT INTO {fencers_table} VALUES (
+            INSERT INTO {fencers_table} (rank,name,country,points) VALUES (
                 {rank},\'{name}\',\'{country}\',{sum(points)}
             )
             '''
@@ -116,3 +121,4 @@ for weapon,category,gender,event in product(
 
     print(len(new_fencers))
     fencers.extend(new_fencers)
+
