@@ -43,6 +43,11 @@ with doc:
             option("Worldwide",value="world")
             for zone in zones:
                 option(zone,value=zone)
+
+        points_type_select = select(id="points-type-select")
+        with points_type_select:
+            option("Olympic",value="olympic")
+            option("Overall",value="overall")
     br()
     with table(border=1,id="points-table"):
         thead(tr(th("Rank"),th("Name"),th("Country"),th("Points")))

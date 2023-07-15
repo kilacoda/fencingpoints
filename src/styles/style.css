@@ -7,3 +7,13 @@ table {
     border-collapse: collapse;
     width: 100%;
 }
+
+select {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 120px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    background-color: #eee;
+}
