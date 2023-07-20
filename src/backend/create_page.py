@@ -18,6 +18,7 @@ with doc:
     h1("Fencing Points Tracker")
     p("This page is meant to simplify looking up Olympic qualification standings for the 2024 Paris Olympics. You can select different options in the dropdowns below to get the table for a specific event.")
     p("The data is scraped from the", a("FIE website",href="https://fie.org/athletes"), ", and is updated whenever I make a change to the code or likely after a major event. If you want to see the code, or contribute, check out the Github repo: ",a("Source (GitHub)",href="https://github.com/kilacoda/fencing_points_tracker"))
+    p(b("NOTE:")," Olympic qualification only counts events from April 3rd, 2023 - April 1st, 2024, hence the difference between the overall and Olympic standings.")
     p("Qualification legend:")
     with div(id="qualification-info"):
         div(style="width: 13pt; height: 13pt; background-color: green;border: 1px solid black;")
