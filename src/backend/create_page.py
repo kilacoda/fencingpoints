@@ -16,8 +16,20 @@ with doc.head:
 
 with doc:
     h1("Fencing Points Tracker")
+    p("This page is meant to simplify looking up Olympic qualification standings for the 2024 Paris Olympics. You can select different options in the dropdowns below to get the table for a specific event.")
+    p("The data is scraped from the", a("FIE website",href="https://fie.org/athletes"), ", and is updated whenever I make a change to the code or likely after a major event. If you want to see the code, or contribute, check out the Github repo: ",a("Source (GitHub)",href="https://github.com/kilacoda/fencing_points_tracker"))
+    p("Qualification legend:")
+    with div(id="qualification-info"):
+        div(style="width: 13pt; height: 13pt; background-color: green;border: 1px solid black;")
+        p("Qualified (team/zone qualified individual)    ")
+        div(style="width: 13pt; height: 13pt; background-color: gray;border: 1px solid black;")
+        p("Qualified (individual qualified due to team)\t")
+        div(style="width: 13pt; height: 13pt;border: 1px solid black;")
+        p("Did not qualify")
+    br()
+    br()
     with div(id="selectors",style="display:flex-horizontal;"):
-        weapon_select = select(id="weapon-select",onchange="load()")
+        weapon_select = select(id="weapon-select")
         with weapon_select:
             option("Sabre",value="S")
             option("Foil",value="F")
@@ -49,7 +61,7 @@ with doc:
             option("Olympic",value="olympic")
             option("Overall",value="overall")
     br()
-    with table(border=1,id="points-table"):
+    with table(border = 1,id="points-table"):
         thead(tr(th("Rank"),th("Name"),th("Country"),th("Points")))
         tbody(id="points-table-body")
 

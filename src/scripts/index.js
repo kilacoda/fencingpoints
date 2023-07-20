@@ -1,6 +1,7 @@
 import { createDbWorker } from "sql.js-httpvfs";
 
 const federations = require("../../federations.json");
+const ioc_countries = require("../../ioc_countries.json");
 
 const workerUrl = new URL(
   "sql.js-httpvfs/dist/sqlite.worker.js",
@@ -41,10 +42,10 @@ async function load(e) {
     var query = `select country from ${weapon}_${category}_${gender}_E_fencers where name in (${federations[zone].map((x) => `'${x.replace("'", "''")}'`).join(",")}) order by ${ranker} asc;`;
 
     console.log(query);
-    const country_codes = await worker.db.query(query);
-
+    const country_codes = Object.keys(ioc_countries).filter((x) => federations[zone].includes(x.toUpperCase()),ioc_countries).map((x) => `'${ioc_countries[x]}'`);
+    // Object.keys(ioc_countries).forEach((x) => ));
     console.log("country_codes", country_codes);
-    query = `select * from ${weapon}_${category}_${gender}_${event}_fencers where country in (${country_codes.map((x) => `'${x["country"]}'`).join(",")}) order by ${ranker} asc;`;
+    query = `select * from ${weapon}_${category}_${gender}_${event}_fencers where country in (${country_codes.join(",")}) order by ${ranker} asc;`;
   }
 
   console.log(query);
@@ -57,13 +58,26 @@ async function load(e) {
   result.forEach((row) => {
     var backgroundColor = "none";
     var color = "black";
-    if (points_type == "olympic") {
+    if ((points_type == "olympic") && (category == "S")) {
       if (event == "E") {
         console.log(row["olympic_qualified"]);
         if (row["olympic_qualified"] === 1) {
           console.log(`${row["name"]} is qualified`);
           backgroundColor = "green";
           color = "white";
+        }
+      } else {
+        console.log(row["olympic_qualified"]);
+        if (row["olympic_qualified"] === 1) {
+          if (row["qualified_by_team"] === 1) {
+            console.log(`${row["name"]} is qualified by team`);
+            backgroundColor = "gray";
+            color = "white";
+          } else {
+            console.log(`${row["name"]} is qualified as zone topper`);
+            backgroundColor = "green";
+            color = "white";
+          }
         }
       }
     }
