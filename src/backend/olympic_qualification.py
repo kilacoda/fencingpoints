@@ -128,6 +128,7 @@ for weapon, gender in product(["S", "F", "E"], ["M", "W"]):
             SELECT olympic_rank
             FROM {weapon}_S_{gender}_I_fencers
             WHERE (country NOT IN (SELECT country FROM {weapon}_S_{gender}_E_fencers teams WHERE teams.olympic_qualified = TRUE)) AND (country IN ({','.join(codes)}))
+            GROUP BY country
             ORDER BY olympic_rank ASC
             LIMIT {limit};
         """
